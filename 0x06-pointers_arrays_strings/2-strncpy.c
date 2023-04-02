@@ -3,7 +3,7 @@
 /**
  * _strncpy - function that copies a string
  *
- * @src: The source of the strings
+ * @src: The source of strings
  * @dest: The destination of the string
  * @n: The length of int
  *
@@ -12,14 +12,13 @@
 char *_strncpy(char *dest, char *src, int n)
 {
 int i;
-
 	for (i = 0; i < n && *(src + i); i++)
 	{
 		*(dest + i) = *(src + i);
 	}
 	for (; i < n; i++)
 	{
-	*(dest + i) = '_0';
+	*(dest + i) = '\0';
 	}
 	return (dest);
 }
