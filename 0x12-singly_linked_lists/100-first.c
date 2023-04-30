@@ -3,8 +3,11 @@
 void first(void) __attribute__ ((constructor));
 
 /**
+ *
  * first - Pronts a sentence
+ *
  * before the main function
+ *
  * is executed
  */
 void first(void)
