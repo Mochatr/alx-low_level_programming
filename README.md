@@ -1,1 +1,1 @@
-Pointers, arrays and strings
+malloc, free
