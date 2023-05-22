@@ -1,6 +1,7 @@
 #include "main.h"
 /**
- * _isalpha - shows 1 if the input is a
+ * _isalpha -  checks for alphabetic character
+ * shows 1 if the input is a
  * letter Another cases, shows 0
  *
  * @c: The character in ASCII code
@@ -18,4 +19,4 @@ int _isalpha(int c)
 		return (0);
 	}
 	_putchar('\n');
-{
+}
