@@ -12,8 +12,6 @@
  * Return: 0
  */
 
-int count_money(int change);
-
 int main(int argc, char *argv[])
 {
 	int money, change;
