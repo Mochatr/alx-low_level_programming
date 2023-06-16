@@ -4,17 +4,19 @@
 /**
  * *malloc_checked - It allocates memory using malloc
  * @b: Parameter
- * Return: pointer to the allocated memory
+ *
+ * Return: Pointer to the allocated memory
  */
 
 void *malloc_checked(unsigned int b)
 {
-	char *p;
+	char *S;
 
-	p = malloc(b);
 
-	if (p == NULL)
+	S = malloc(b);
+
+	if (S == NULL)
 		exit(98);
+	return (S);
 
-	return (p);
 }
