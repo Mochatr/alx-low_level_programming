@@ -1,25 +1,43 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "function_pointers.h"
 
 /**
- * main - Function that prints its own opcodes
- * @argc: Parameter
- * @argv: Parameter
- * Return: 0
+ * printOpcodes - Prints the opcodes of the main function
+ * @Bytes: Number of bytes to print
+ */
+
+void printOpcodes(int Bytes)
+{
+	unsigned char *address = (unsigned char *)printOpcodes;
+
+	int i = 0;
+
+	if (i < Bytes)
+	{
+		i++;
+		printf("%02x ", *(address + i));
+		printf("\n");
+	}
+}
+
+/**
+ * main - Entry point of the program
+ * @argc: Number of command-line arguments
+ * @argv: Array of command-line arguments
+ * Return: 0 on success,
+ * 1 if incorrect number of arguments, 2 if negative bytes
+ *
  */
 
 int main(int argc, char *argv[])
 {
 	int Bytes;
 
-	int a;
-
-	char *ar;
-
 	if (argc != 2)
 	{
 		printf("Error\n");
-		exit(1);
+		return (1);
 	}
 
 	Bytes = atoi(argv[1]);
@@ -27,19 +45,9 @@ int main(int argc, char *argv[])
 	if (Bytes < 0)
 	{
 		printf("Error\n");
-		exit(2);
+		return (2);
 	}
 
-	ar = (char *)main;
-
-	for (a = 0; a < Bytes; a++)
-	{
-		if (a == Bytes - 1)
-		{
-			printf("%02hhx\n", ar[a]);
-			break;
-		}
-		printf("%02hhx", ar[a]);
-	}
+	printOpcodes(Bytes);
 	return (0);
 }
