@@ -2,47 +2,27 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-char *create_buffer(char *file);
-void close_file(int fd);
+void error_file(int ff, int ft, char *argv[]);
+int main(int argc, char *argv[]);
 
 /**
- * create_buffer - Function
- * @file: Parameter
- *
+ * error_file - Function
+ * @ff: Parameter
+ * @ft: Parameter
+ * @argv: Parameter
  * Return: A value
  */
-char *create_buffer(char *file)
+void error_file(int ff, int ft, char *argv[])
 {
-	char *buff;
-
-	buff = malloc(sizeof(char) * 1024);
-
-	if (buff == NULL)
-
+	if (ff == -1)
 	{
-		dprintf(STDERR_FILENO,
-			"Error: Can't write to %s\n", file);
-		exit(99);
+		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
+		exit(98);
 	}
-
-	return (buff);
-}
-
-/**
- * close_file - Function
- * @fd: Parameter
- */
-
-void close_file(int fd)
-{
-	int a;
-
-	a = close(fd);
-
-	if (a == -1)
+	if (ft == -1)
 	{
-		dprintf(STDERR_FILENO, "Error: Cant't close fd %d\n", fd);
-		exit(100);
+		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]);
+		exit(99);
 	}
 }
 
@@ -52,13 +32,13 @@ void close_file(int fd)
  * @argv: Parameter
  *
  * Return: Value
- * Description: desc
  */
 
 int main(int argc, char *argv[])
 {
-	int a, b, c, d;
-	char *buff;
+	int ff, ft, er_close;
+	ssize_t nchar, nr;
+	char buff[1024];
 
 	if (argc != 3)
 	{
@@ -66,39 +46,35 @@ int main(int argc, char *argv[])
 		exit(97);
 	}
 
-	buff = create_buffer(argv[2]);
-	a = open(argv[1], O_RDONLY);
-	c = read(a, buff, 1024);
-	b = open(argv[2], O_CREAT | O_WRONLY | O_TRUNC, 0664);
+	ff = open(argv[1], O_RDONLY);
+	ft = open(argv[2], O_CREAT | O_WRONLY | O_TRUNC, 0664);
+	error_file(ff, ft, argv);
 
-	do {
-		if (a == -1 || c == -1)
-		{
-			dprintf(STDERR_FILENO,
-				"Error: Can't read from file %s\n", argv[1]);
-			free(buff);
-			exit(98);
-		}
+	nchar = 1024;
+	while (nchar == 1024)
+	{
+		nchar = read(ff, buff, 1024);
+		if (nchar == -1)
+			error_file(-1, 0, argv);
+		nr = write(ft, buff, nchar);
+		if (nr == -1)
+			error_file(0, -1, argv);
+	}
 
-		d = write(b, buff, c);
-		if (b == -1 || d == -1)
-		{
-			dprintf(STDERR_FILENO,
-				"Error: Can't write to %s\n", argv[2]);
-			free(buff);
-			exit(99);
-		}
+	er_close = close(ff);
+	if (er_close == -1)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", ff);
+		exit(100);
+	}
 
-		c = read(a, buff, 1024);
-		b = open(argv[2], O_WRONLY | O_APPEND);
-
-	} while (c > 0);
-
-	free(buff);
-	close_file(a);
-	close_file(b);
+	er_close = close(ft);
+	if (er_close == -1)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", ff);
+		exit(100);
+	}
 
 	return (0);
 }
-
 
