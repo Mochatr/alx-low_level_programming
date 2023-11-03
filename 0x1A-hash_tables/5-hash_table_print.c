@@ -12,7 +12,7 @@ void hash_table_print(const hash_table_t *ht)
 
 	if (ht == NULL || ht->array == NULL)
 		return;
-	printf("(");
+	printf("{");
 	for (i = 0; i < ht->size; i++)
 	{
 		curr = ht->array[i];
