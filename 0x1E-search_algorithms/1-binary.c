@@ -9,7 +9,7 @@
  */
 void display_array(const int *array, size_t left, size_t right)
 {
-	printf("Searching within the array: ");
+	printf("Searching in array: ");
 
 	while (left <= right)
 	{
@@ -23,7 +23,7 @@ void display_array(const int *array, size_t left, size_t right)
 }
 
 /**
- * binary_search -  Searches for a value in a sorted array of integers
+ * binary_search - Searches for a value in a sorted array of integers
  * Using the Binary search algorithm.
  * @array: Pointer to the first element of the array to search in
  * @size: The number of elements in array
